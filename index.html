@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Telegram LMS</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    button { padding: 10px; margin: 5px; }
+  </style>
+</head>
+<body>
+
+<h2>📚 My Telegram LMS</h2>
+<p id="user"></p>
+<p id="status"></p>
+
+<button onclick="playVideo()">▶ Watch Video</button>
+
+<script>
+  const tg = window.Telegram.WebApp;
+  tg.ready();
+
+  const user = tg.initDataUnsafe.user;
+  document.getElementById("user").innerText =
+    "User: " + user.first_name + " (ID: " + user.id + ")";
+
+  let count = localStorage.getItem("count") || 0;
+  let date = localStorage.getItem("date") || "";
+
+  function playVideo() {
+    const today = new Date().toDateString();
+
+    if (date !== today) {
+      count = 0;
+      date = today;
+    }
+
+    if (count >= 5) {
+      document.getElementById("status").innerText =
+        "❌ Daily limit reached. Come back tomorrow.";
+      return;
+    }
+
+    count++;
+    localStorage.setItem("count", count);
+    localStorage.setItem("date", date);
+
+    document.getElementById("status").innerText =
+      "✅ Video played. Remaining: " + (5 - count);
+  }
+</script>
+
+</body>
+</html>
