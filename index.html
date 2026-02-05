@@ -24,6 +24,9 @@
   document.getElementById("user").innerText =
     "User: " + user.first_name + " (ID: " + user.id + ")";
 
+  // 🔴 PUT YOUR TELEGRAM VIDEO LINK HERE
+  const videoLink = "https://t.me/c/3889647035/8";
+
   let count = localStorage.getItem("count") || 0;
   let date = localStorage.getItem("date") || "";
 
@@ -46,7 +49,10 @@
     localStorage.setItem("date", date);
 
     document.getElementById("status").innerText =
-      "✅ Video played. Remaining: " + (5 - count);
+      "✅ Video opened. Remaining today: " + (5 - count);
+
+    // ✅ OPEN TELEGRAM VIDEO
+    tg.openLink(videoLink);
   }
 </script>
 
