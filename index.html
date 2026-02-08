@@ -2,30 +2,76 @@
 <html>
 <head>
   <title>Telegram LMS</title>
+
+  <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
   <style>
-    body { font-family: Arial; padding: 20px; }
-    button { padding: 10px; margin: 5px; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 15px;
+      background: #f7f7f7;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 12px 18px;
+      margin: 10px 0;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+      background: #0088cc;
+      color: white;
+    }
+
+    video {
+      width: 100%;
+      margin-top: 15px;
+      border-radius: 8px;
+      background: black;
+    }
+
+    #status {
+      margin-top: 8px;
+      font-weight: bold;
+    }
   </style>
 </head>
+
 <body>
 
 <h2>📚 My Telegram LMS</h2>
+
 <p id="user"></p>
 <p id="status"></p>
 
 <button onclick="playVideo()">▶ Watch Video</button>
+
+<!-- Video Player -->
+<video
+  id="player"
+  controls
+  playsinline
+  controlsList="nodownload"
+>
+</video>
 
 <script>
   const tg = window.Telegram.WebApp;
   tg.ready();
 
   const user = tg.initDataUnsafe.user;
+
   document.getElementById("user").innerText =
     "User: " + user.first_name + " (ID: " + user.id + ")";
 
-  // 🔴 PUT YOUR TELEGRAM VIDEO LINK HERE
-  const videoLink = "https://t.me/c/3889647035/8";
+  // ✅ BUNNY STREAM VIDEO (YOUR REAL DETAILS)
+  const bunnyVideoUrl =
+    "https://vz-2379b906-23b.b-cdn.net/367fc542-b1b1-439c-b6c5-b0b806cfa9b7/playlist.m3u8";
 
   let count = localStorage.getItem("count") || 0;
   let date = localStorage.getItem("date") || "";
@@ -49,10 +95,11 @@
     localStorage.setItem("date", date);
 
     document.getElementById("status").innerText =
-      "✅ Video opened. Remaining today: " + (5 - count);
+      "✅ Playing video. Remaining today: " + (5 - count);
 
-    // ✅ OPEN TELEGRAM VIDEO
-    tg.openLink(videoLink);
+    const player = document.getElementById("player");
+    player.src = bunnyVideoUrl;
+    player.play();
   }
 </script>
 
